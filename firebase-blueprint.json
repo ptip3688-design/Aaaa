@@ -1,0 +1,196 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user profile, language preference, voice toggle, and consented assistant memory notes.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "User display name."
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Verified user email address."
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "enum": ["auto", "en", "ur", "roman-ur", "hi"],
+          "description": "Preferred response and speech language."
+        },
+        "voiceEnabled": {
+          "type": "boolean",
+          "description": "Whether spoken TTS responses are enabled."
+        },
+        "memoryNotes": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Consented user preferences remembered across sessions."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "email",
+        "preferredLanguage",
+        "voiceEnabled",
+        "memoryNotes",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "A persistent JARVIS AI conversation thread belonging to a single user.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the conversation owner."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Conversation title."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["general", "coding", "writing", "translate"],
+          "description": "Active assistant mode."
+        },
+        "messageCount": {
+          "type": "integer",
+          "description": "Total messages in the conversation."
+        },
+        "lastMessagePreview": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Short preview of the latest message."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "title",
+        "mode",
+        "messageCount",
+        "lastMessagePreview",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "An individual message inside a conversation thread.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the conversation owner."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant"],
+          "description": "Message sender role."
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30000,
+          "description": "Message text content."
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["general", "coding", "writing", "translate"],
+          "description": "Assistant mode used for this message."
+        },
+        "hasAttachment": {
+          "type": "boolean",
+          "description": "Whether an image or file attachment was included."
+        },
+        "attachmentName": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Filename of attachment if present, otherwise empty string."
+        },
+        "attachmentType": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "MIME type of attachment if present, otherwise empty string."
+        },
+        "groundingLinks": {
+          "type": "array",
+          "description": "Up to 10 verified grounding URLs returned by search."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "role",
+        "content",
+        "mode",
+        "hasAttachment",
+        "attachmentName",
+        "attachmentType",
+        "groundingLinks",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Private user profile and assistant preferences isolated by UID."
+    },
+    "/conversations/{conversationId}": {
+      "schema": {
+        "$ref": "#/entities/Conversation"
+      },
+      "description": "User-owned JARVIS AI conversation threads."
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/ChatMessage"
+      },
+      "description": "Messages belonging to a user-owned conversation thread."
+    }
+  }
+}

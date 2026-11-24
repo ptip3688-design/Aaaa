@@ -1,0 +1,6 @@
+{
+  "name": "JARVIS AI",
+  "description": "Multimodal personal AI assistant powered by Gemini API and Firebase with voice interaction, image and document analysis, web grounding, and persistent cloud memory.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

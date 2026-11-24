@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  html,
+  body {
+    font-family: var(--font-sans);
+    background-color: #0a0e17;
+    color: #f1f5f9;
+    letter-spacing: 0.005em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  code,
+  pre,
+  .font-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle custom scrollbars for dark command surface */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.35);
+}
+
+/* Markdown prose formatting inside assistant responses */
+.jarvis-prose p {
+  margin-bottom: 0.75rem;
+  line-height: 1.65;
+}
+
+.jarvis-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.jarvis-prose ul,
+.jarvis-prose ol {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+}
+
+.jarvis-prose ul {
+  list-style-type: disc;
+}
+
+.jarvis-prose ol {
+  list-style-type: decimal;
+}
+
+.jarvis-prose li {
+  margin-bottom: 0.35rem;
+  line-height: 1.6;
+}
+
+.jarvis-prose h1,
+.jarvis-prose h2,
+.jarvis-prose h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: #f8fafc;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.jarvis-prose h1 {
+  font-size: 1.2rem;
+}
+
+.jarvis-prose h2 {
+  font-size: 1.075rem;
+}
+
+.jarvis-prose h3 {
+  font-size: 0.975rem;
+}
+
+.jarvis-prose a {
+  color: #38bdf8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.jarvis-prose blockquote {
+  border-left: 1px solid rgba(56, 189, 248, 0.4);
+  padding-left: 0.875rem;
+  color: #cbd5e1;
+  margin: 0.75rem 0;
+}
+
+.jarvis-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  font-size: 0.875rem;
+}
+
+.jarvis-prose th,
+.jarvis-prose td {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.jarvis-prose th {
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 600;
+}
